@@ -1,74 +1,131 @@
-const Quiz = require('../models/Quiz');
-const Question = require('../models/Question');
-const Answer = require('../models/Answer');
-const calculateScore = require('../utils/calculateScore');
+const { calculatePartialScores, calculateScore } = require('../utils/calculateScore');
 
-module.exports = {
 
-  createQuiz: async function (req, res) {
-    try {
-      const quizData = req.body;
-      if (!quizData) {
-        return res.status(400).json('Quiz data is empty');
+  module.exports = {
+
+    async createQuiz(req, res) {
+      try {
+        const quizData = req.body;
+  
+        const questionsData = quizData.questions.map(question => ({
+          questionText: question.questionText,
+          answers: question.answers.map(answer => ({
+            optionName: answer.optionName,
+            isChecked: answer.isChecked
+          }))
+        }));
+  
+        const createdQuestions = await Promise.all(questionsData.map(async questionData => {
+          const createdQuestion = await Question.create({ questionText: questionData.questionText }).fetch();
+          const createdAnswers = await Promise.all(questionData.answers.map(async answerData => {
+            const createdAnswer = await Answer.create({
+              optionName: answerData.optionName,
+              isChecked: answerData.isChecked,
+              question: createdQuestion.id
+            }).fetch();
+            return createdAnswer;
+          }));
+          await Question.addToCollection(createdQuestion.id, 'answers').members(createdAnswers.map(answer => answer.id));
+          return createdQuestion;
+        }));
+  
+        const questionIds = createdQuestions.map(question => question.id);
+        const createdQuiz = await Quiz.create({
+          title: quizData.title,
+          userId: quizData.userId,
+          questions: questionIds
+        }).fetch();
+  
+        return res.status(201).json({ message: 'Quiz created successfully!', quiz: createdQuiz });
+      } catch (error) {
+        console.error('Error creating quiz:', error);
+        return res.status(500).json({ message: 'Error creating quiz' });
       }
-      const newQuiz = await Quiz.create(quizData);
-      res.status(201).json(newQuiz);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  findQuizByID: async function (req, res) {
-    try {
-      const { id } = req.params;
-      const foundData = await Quiz.findByPk(id);
-      if (!foundData) {
-        return res.status(404).json("Data for the id not found");
+    },
+  
+    async findQuizByID(req, res) {
+      try {
+        const { id } = req.params;
+        const foundData = await Quiz.findOne({ id }).populate('questions');
+    
+        if (!foundData) {
+          return res.status(404).json({ error: "Data for the id not found" });
+        }
+        
+        await Promise.all(foundData.questions.map(async (question) => {
+          question.answers = await Answer.find({ question: question.id });
+        }));
+    
+        return res.json(foundData);
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
       }
-      res.json(foundData);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
+    },
+    
+      
 
-  findAllQuizs: async function (req, res) {
-    try {
-      const data = await Quiz.findAll();
-      if (!data || data.length === 0) {
-        return res.status(404).json("Data not found");
-      }
-      res.json(data);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
 
-  addSolutions: async function (req, res) {
-    try {
-      const { quizId, userName, questions } = req.body;
-      const quiz = await Quiz.findByPk(quizId);
-      if (!quiz) {
-        return res.status(404).json({ message: 'Quiz not found' });
+    async addSolutions(req, res) {
+      try {
+          const { quizId, userId, questions } = req.body;
+  
+          const userSolution = {
+              userId,
+              quizId,
+              questions: questions.map(question => ({
+                  id: question.id,
+                  questionText: question.questionText,
+                  answers: question.answers
+              }))
+          };
+  
+          const quiz = await Quiz.findOne({ id: quizId }).populate('questions');
+  
+          if (!quiz) {
+              return res.status(404).json({ message: 'Quiz not found' });
+          }
+  
+          await Promise.all(quiz.questions.map(async (question) => {
+              question.answers = await Answer.find({ question: question.id });
+          }));
+  
+          const score = calculateScore(quiz, userSolution);
+          
+          // console.log( score, 44 )
+          console.log(userId, score, quizId, quiz.id, "lol");
+          try{
+            console.log(QuizResult);
+            await QuizResult.create({
+                userId,
+                score,
+                quizId: quiz.id
+            }).fetch();
+          }catch(err){
+            console.log("soomething wrong");
+            console.log(err);
+          }
+          
+          return res.status(200).json({ message: 'Solution added successfully', userId, score });
+      } catch (error) {
+          console.error('Error adding solutions:', error);
+          return res.status(500).json({ message: 'Internal server error' });
       }
-      const score = calculateScore(quiz, { userName, quizId, questions });
-      const obtainedScore = await QuizResult.create({
-        userName,
-        score,
-        quizId: quiz.id
-      });
-      res.status(200).json({ message: 'Solution added successfully', userName, score });
-    } catch (error) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
   },
+  
+    
 
   getResults: async function (req, res) {
     try {
-      const results = await QuizResult.findAll();
+      const results = await QuizResult.find({});
       res.status(200).json(results);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
+
+
 };
+
+
+
+

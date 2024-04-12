@@ -24,27 +24,46 @@ const calculatePartialScores = (correctAnswers, userAnswers) => {
 const calculateScore = (quizDocument, userSolution) => {
     let score = 0;
 
+    console.log(quizDocument, userSolution);
+
     quizDocument.questions.forEach((question, index) => {
+
         const eachQuestionAnswers = question.answers;
-        const userAnswers = userSolution.questions[index].answers;
+        const userQuestion = userSolution.questions[index];
 
-        const questionsAnswer = eachQuestionAnswers.every((answer, index2) => {
-            const optionName = answer.optionName;
-            const isOptionSelected = answer.isChecked;
-            const userOptionName = userAnswers[index2].optionName;
-            const userSelectedOption = userAnswers[index2].isChecked;
+        if (userQuestion && userQuestion.answers) {
+            const userAnswers = userQuestion.answers;
 
-            return optionName === userOptionName && isOptionSelected === userSelectedOption;
-        });
+            const questionsAnswer = eachQuestionAnswers.every((answer, index2) => {
+                if(!answer.optionName ){
+                    console.log(answer, "ahahah");
+                }
+                const optionName = answer.optionName;
+                const isOptionSelected = answer.isChecked;
+                const userOption = userAnswers.find(a => a.optionName === optionName); 
 
-        if (questionsAnswer) {
-            score += 1;
-        } else {
-            score += calculatePartialScores(eachQuestionAnswers, userAnswers);
+                if (userOption) {
+                    const userOptionName = userOption.optionName;
+                    const userSelectedOption = userOption.isChecked;
+
+                    return optionName === userOptionName && isOptionSelected === userSelectedOption;
+                }
+                return false;
+            });
+
+            if (questionsAnswer) {
+                score += 1;
+            } else {
+                score += calculatePartialScores(eachQuestionAnswers, userAnswers);
+            }
         }
     });
 
     return score;
 };
 
-module.exports = calculateScore;
+module.exports = { calculatePartialScores, calculateScore };
+
+
+
+module.exports = { calculatePartialScores, calculateScore };

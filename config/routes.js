@@ -65,10 +65,7 @@ module.exports.routes = {
   
 
   // 'POST /quiz/create': { action: 'QuizzesController.createQuiz' },
-  // 'GET /quiz/:id': { action: 'QuizzesController.findQuizByID' },
   // 'GET /quizzes': { action: 'QuizzesController.findAllQuizs' },
-  // 'POST /quiz/submit': { action: 'QuizzesController.addSolutions' },
-  // 'GET /quiz/results': { action: 'QuizzesController.getResults' },
 
 
     'GET /foo': { action: 'QuizzesController/foo' },
@@ -76,7 +73,21 @@ module.exports.routes = {
     'POST /create-quiz': {
       controller: 'QuizzesController',
       action: 'createQuiz'
-    }
+    },
     
+    'GET /quiz/:id': {
+      controller: 'QuizzesController',
+      action: 'findQuizByID' 
+    },
+
+    'POST /quiz/submit': {  
+      controller: 'QuizzesController',
+      action: 'addSolutions'  
+  },
+    'GET /quiz/results':  {  
+      controller: 'QuizzesController',
+      action: 'getResults'  
+  },
+
 
 };
