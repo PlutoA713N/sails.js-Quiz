@@ -7,15 +7,20 @@ const calculatePartialScores = (correctAnswers, userAnswers) => {
         return correctAnswer && correctAnswer.isChecked && answer.isChecked;
     }).length;
 
+
+    const ifDefaultOptionValues = userAnswers.filter((answer) => !answer.isChecked).length === userAnswers.length
+
     const incorrectCount = userAnswers.filter(answer => {
         const correctAnswer = correctAnswers.find(a => a.optionName === answer.optionName);
-        return !correctAnswer || !correctAnswer.isChecked && answer.isChecked;
+        return !correctAnswer.isChecked && answer.isChecked;
     }).length;
 
     let partialScore = userCorrectCount / correctCount;
 
-    if (incorrectCount > 0) {
-        partialScore -= incorrectCount / userAnswers.length;
+    // console.log( userCorrectCount, partialScore , incorrectCount )
+
+    if ( !ifDefaultOptionValues && incorrectCount > 0) {
+        partialScore -= incorrectCount / correctCount;
     }
 
     return partialScore;
@@ -24,7 +29,7 @@ const calculatePartialScores = (correctAnswers, userAnswers) => {
 const calculateScore = (quizDocument, userSolution) => {
     let score = 0;
 
-    console.log(quizDocument, userSolution);
+    // console.log(quizDocument, userSolution);
 
     quizDocument.questions.forEach((question, index) => {
 
@@ -61,9 +66,5 @@ const calculateScore = (quizDocument, userSolution) => {
 
     return score;
 };
-
-module.exports = { calculatePartialScores, calculateScore };
-
-
 
 module.exports = { calculatePartialScores, calculateScore };
