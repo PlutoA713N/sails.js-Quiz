@@ -7,8 +7,8 @@ module.exports = {
       model: 'quiz',
       columnName: 'quiz_id'
     },
-    createdAt: { type: 'ref', columnType: 'timestamp', autoCreatedAt: true },
-    updatedAt: { type: 'ref', columnType: 'timestamp', autoUpdatedAt: true },
+    // createdAt: { type: 'ref', columnType: 'timestamp', autoCreatedAt: true },
+    // updatedAt: { type: 'ref', columnType: 'timestamp', autoUpdatedAt: true },
     answers: {
       collection: 'answer',
       via: 'question'
