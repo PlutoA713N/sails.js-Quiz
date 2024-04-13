@@ -91,10 +91,8 @@ const { calculatePartialScores, calculateScore } = require('../utils/calculateSc
   
           const score = calculateScore(quiz, userSolution);
           
-          // console.log( score, 44 )
-          console.log(userId, score, quizId, quiz.id, "lol");
           try{
-            console.log(QuizResult);
+            // console.log(QuizResult);
             await QuizResult.create({
                 userId,
                 score,
