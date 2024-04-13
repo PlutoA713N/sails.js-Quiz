@@ -29,20 +29,22 @@ const calculatePartialScores = (correctAnswers, userAnswers) => {
 const calculateScore = (quizDocument, userSolution) => {
     let score = 0;
 
-    // console.log(quizDocument, userSolution);
+    console.log(quizDocument, userSolution, 44);
 
     quizDocument.questions.forEach((question, index) => {
 
+        const question_id = question.id
+
+        const userQuestion = userSolution.questions.find((question) => question_id === question.id)
+
         const eachQuestionAnswers = question.answers;
-        const userQuestion = userSolution.questions[index];
+        // const userQuestion = userSolution.questions[index];
 
         if (userQuestion && userQuestion.answers) {
             const userAnswers = userQuestion.answers;
 
             const questionsAnswer = eachQuestionAnswers.every((answer, index2) => {
-                if(!answer.optionName ){
-                    console.log(answer, "ahahah");
-                }
+               
                 const optionName = answer.optionName;
                 const isOptionSelected = answer.isChecked;
                 const userOption = userAnswers.find(a => a.optionName === optionName); 
