@@ -103,7 +103,7 @@ const { calculatePartialScores, calculateScore } = require('../utils/calculateSc
             console.log(err);
           }
           
-          return res.status(200).json({ message: 'Solution added successfully', userId, score });
+          return res.status(200).json({ message: 'Solution added successfully', quizId, userId, score });
       } catch (error) {
           console.error('Error adding solutions:', error);
           return res.status(500).json({ message: 'Internal server error' });
