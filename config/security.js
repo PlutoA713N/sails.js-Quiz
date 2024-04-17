@@ -45,5 +45,10 @@ module.exports.security = {
   ****************************************************************************/
 
   // csrf: true
-
+  cors: {
+    allRoutes: true,
+    allowOrigins: ['http://localhost:5173'],
+    // allowCredentials: true, 
+    // allowRequestHeaders: 'content-type, authorization'
+  }
 };

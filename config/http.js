@@ -57,4 +57,7 @@ module.exports.http = {
 
   },
 
+  //New config warnings corrections
+
+  trustProxy: true
 };
