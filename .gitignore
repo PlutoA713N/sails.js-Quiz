@@ -132,3 +132,21 @@ lib-cov
 *.out
 *.pid
 
+# new folders
+.tmp/
+api/controllers/account/
+api/controllers/dashboard/
+api/controllers/entrance/
+api/controllers/legal/
+api/controllers/helpers/
+api/controllers/policies/
+api/controllers/responses/
+
+assets/
+
+config/env/
+config/locales/
+
+scripts/
+tasks/
+views/
