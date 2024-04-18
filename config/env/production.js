@@ -50,7 +50,7 @@ module.exports = {
     ***************************************************************************/
     default: {
       adapter: 'sails-mysql',
-      url: 'mysql://user:password@host:port/database',
+      url: 'mysql://user0.1:user0.1@10.10.2.161/quizDb',
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
       //--------------------------------------------------------------------------
