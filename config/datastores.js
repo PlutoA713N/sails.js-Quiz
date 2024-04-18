@@ -50,7 +50,7 @@ module.exports.datastores = {
     ***************************************************************************/
     adapter: 'sails-mysql',
     url: 'mysql://user0.1:user0.1@10.10.2.161/quizDb',
-    connectTimeout: 30000,
+    connectTimeout: 70000,
 
 
   },
