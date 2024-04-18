@@ -43,12 +43,17 @@ module.exports.sockets = {
   ***************************************************************************/
 
   beforeConnect: function(handshake, proceed) {
-  
-    // `true` allows the socket to connect.
-    // (`false` would reject the connection)
-    return proceed(undefined, true);
-  
-  },
+    const handshakeTimeout = setTimeout(() => {
+        return proceed(new Error('Handshake timed out'));
+    }, 10000); 
+
+    proceed(undefined, true);
+
+    handshake.once('end', () => {
+        clearTimeout(handshakeTimeout);
+    });
+},
+
 
 
   /***************************************************************************
