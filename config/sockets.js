@@ -29,7 +29,7 @@ module.exports.sockets = {
 
   // transports: [ 'websocket' ],
 
-  onlyAllowOrigins: '*',
+  // onlyAllowOrigins: [],
   /***************************************************************************
   *                                                                          *
   * `beforeConnect`                                                          *
@@ -42,13 +42,13 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  // beforeConnect: function(handshake, proceed) {
+  beforeConnect: function(handshake, proceed) {
   
-  //   // `true` allows the socket to connect.
-  //   // (`false` would reject the connection)
-  //   return proceed(undefined, true);
+    // `true` allows the socket to connect.
+    // (`false` would reject the connection)
+    return proceed(undefined, true);
   
-  // },
+  },
 
 
   /***************************************************************************
