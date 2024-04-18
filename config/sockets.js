@@ -43,15 +43,15 @@ module.exports.sockets = {
   ***************************************************************************/
 
   beforeConnect: function(handshake, proceed) {
-    const handshakeTimeout = setTimeout(() => {
-        return proceed(new Error('Handshake timed out'));
-    }, 30000); 
+    // const handshakeTimeout = setTimeout(() => {
+    //     return proceed(new Error('Handshake timed out'));
+    // }, 30000); 
 
-    proceed(undefined, true);
+    proceed(null, true);
 
-    handshake.once('end', () => {
-        clearTimeout(handshakeTimeout);
-    });
+    // handshake.once('end', () => {
+    //     clearTimeout(handshakeTimeout);
+    // });
 },
 
 
