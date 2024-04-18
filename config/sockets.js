@@ -29,7 +29,7 @@ module.exports.sockets = {
 
   // transports: [ 'websocket' ],
 
-  // onlyAllowOrigins: [],
+  onlyAllowOrigins: [],
   /***************************************************************************
   *                                                                          *
   * `beforeConnect`                                                          *
@@ -42,17 +42,17 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  beforeConnect: function(handshake, proceed) {
-    const handshakeTimeout = setTimeout(() => {
-        return proceed(new Error('Handshake timed out'));
-    }, 30000); 
+//   beforeConnect: function(handshake, proceed) {
+//     const handshakeTimeout = setTimeout(() => {
+//         return proceed(new Error('Handshake timed out'));
+//     }, 30000); 
 
-    proceed(undefined, true);
+//     proceed(undefined, true);
 
-    handshake.once('end', () => {
-        clearTimeout(handshakeTimeout);
-    });
-},
+//     handshake.once('end', () => {
+//         clearTimeout(handshakeTimeout);
+//     });
+// },
 
 
 
