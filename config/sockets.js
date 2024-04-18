@@ -29,8 +29,7 @@ module.exports.sockets = {
 
   // transports: [ 'websocket' ],
 
-  onlyAllowOrigins: [],
-
+  onlyAllowOrigins: '*',
   /***************************************************************************
   *                                                                          *
   * `beforeConnect`                                                          *
