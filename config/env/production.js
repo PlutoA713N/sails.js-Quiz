@@ -31,6 +31,8 @@ module.exports = {
   **************************************************************************/
   datastores: {
 
+    
+
     /***************************************************************************
     *                                                                          *
     * Configure your default production database.                              *
@@ -47,6 +49,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     default: {
+      adapter: 'sails-mysql',
+      url: 'mysql://user:password@host:port/database',
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
       //--------------------------------------------------------------------------
