@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: new_password
+      MYSQL_DATABASE: quizDb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  app:
+    container_name: my_backend_service
+    build: .
+    ports:
+      - "1337:1337"
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_URL: 'mysql://root:new_password@mysql:3306/quizDb'
