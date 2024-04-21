@@ -49,8 +49,7 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-mysql',
-    // url: 'mysql://user0.1:user0.1@10.10.2.161/quizDb',
-    url:'mysql://freedb_chandu:sxkkfm@mv47qY!!@sql.freedb.tech/freedb_quizDb',
+    url: 'mysql://user0.1:user0.1@192.168.1.43/quizDb',
     connectionLimit : 1000,
     connectTimeout  : 60 * 60 * 1000,
     acquireTimeout  : 60 * 60 * 1000,
@@ -59,3 +58,6 @@ module.exports.datastores = {
 
 
 };
+
+// url:'mysql://freedb_chandu:sxkkfm@mv47qY!!@sql.freedb.tech/freedb_quizDb',
+
