@@ -153,7 +153,7 @@ module.exports = {
     ***************************************************************************/
     cors: {
       allowOrigins: [
-        'https://quiz-frontend-omega.vercel.app',
+        // 'https://quiz-frontend-omega.vercel.app',
       ]
     },
 
@@ -334,7 +334,6 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cache: 365.25 * 24 * 60 * 60 * 1000, // One year
-
     /***************************************************************************
     *                                                                          *
     * Proxy settings                                                           *
@@ -399,7 +398,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    // baseUrl: 'https://QuizBackend.com',
+    baseUrl: 'http://localhost',
     // internalEmailAddress: 'support@example.com',
 
     // sendgridSecret: 'SG.fake.3e0Bn0qSQVnwb1E4qNPz9JZP5vLZYqjh7sn8S93oSHU',
