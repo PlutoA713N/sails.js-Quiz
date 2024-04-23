@@ -398,7 +398,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    // baseUrl: 'http://localhost',
+    baseUrl: 'http://localhost',
     // internalEmailAddress: 'support@example.com',
 
     // sendgridSecret: 'SG.fake.3e0Bn0qSQVnwb1E4qNPz9JZP5vLZYqjh7sn8S93oSHU',
