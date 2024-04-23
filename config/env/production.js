@@ -398,8 +398,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    // baseUrl: 'http://localhost',
-    baseUrl: 'https://sails-js-quiz.onrender.com',
+    baseUrl: 'https://quizbackend-gtn6.onrender.com',
 
     // internalEmailAddress: 'support@example.com',
 
